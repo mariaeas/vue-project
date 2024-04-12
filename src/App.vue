@@ -1,11 +1,42 @@
 <script>
+import { onMounted } from 'vue';
+
 export default {
   data() {
     return {
       text2: '',
       count: 0,
+      count2: 0,
+      firstArray: ['Maria', 'Maynara', 'João']
     }
+  },
+
+  methods: {
+    addStudent() {
+      if (this.firstArray.length >= 10)  {
+        return
+      }
+      this.firstArray.push(this.text2)
+      this.text2 = ''
+    },
+    removeLastStudent() {
+      this.firstArray.pop()
+    },
+    removeStudent(index) {
+      this.firstArray.splice(index, 1)
+    },
+
+  },
+
+  created () {
+    this.firstArray.push('Eduardo');
+  },
+
+computed: {
+  sumCount() {
+    return this.count + this.count2
   }
+},
 }
 </script>
 
@@ -13,17 +44,32 @@ export default {
   <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
+    <!-- <p v-if="count > 10">Parágrafo secreto</p>
+    <p v-else-if="count > 5">Parágrafo do meio</p>
+    <p v-else-if="count < 0">É um número negativo</p>
+    <p v-else>Parágrafo de teste</p>-->
+
     <div class="wrapper">
       <button @click="count--">-</button>
       <h1 :class="count > 10 ? 'greenn' : ''">{{ count }}</h1>
       <button @click="count++">+</button>
-      <p v-if="count > 10">Parágrafo secreto</p>
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
     </div>
+      <div class="wrapper">
+        <button @click="count2--">-</button>
+      <h1 :class="count2 > 10 ? 'greenn' : ''">{{ count2 }}</h1>
+      <button @click="count2++">+</button>
+    </div>
+    <p>A soma desses dois valores é {{sumCount}}</p>
+      <section>
+      <input type="text" v-model="text2" @keyup.enter="addStudent()">
+      <button :disabled="firstArray.length >= 10" @click="addStudent()">Adicionar nome</button>
+      <p style="color:red" v-show="firstArray.length >= 10">Limite de itens atingidos!</p>
+      <div v-for="(student, index) in firstArray" :key="student"><span>{{ student }}</span>
+      <button @click="removeStudent(index)">Remover {{ student }}</button>
+    </div>
+
+    </section>
+  
   </header>
 
   <RouterView />

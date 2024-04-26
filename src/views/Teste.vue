@@ -75,8 +75,7 @@ export default {
     <div class="about">
         <h1>Teste!</h1>
         <button @click="selectedProduct = {}, showModal = true">Mostrar Modal</button>
-        <button @click="selectedProduct = {}, showModal = true">Criar produto</button>
-        <button @click="showModal = true" :disabled="!selectedProduct.id">Editar produto</button>
+        <button @click="showModal = true" :disabled="selectedProduct.id">Editar produto</button>
         <button @click="deleteProduct()">Deletar produto {{ selectedProduct.name }}</button>
     </div>
 
